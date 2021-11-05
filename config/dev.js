@@ -23,7 +23,8 @@ esbuild.build(Object.assign({}, {
     })();`
   },
   loader: {
-    '.png': 'dataurl'
+    '.png': 'dataurl',
+    '.jpg': 'dataurl',
   },
   define: {
     'process.env.NODE_ENV': '"dev"'

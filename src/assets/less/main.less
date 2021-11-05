@@ -4,6 +4,20 @@ body {
   background-color: #fdfdfd;
 }
 
+//自定义滚动条
+&::-webkit-scrollbar {
+  width: 6px;
+  height: 10px;
+}
+&::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+&::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
 .wrap {
   .inner {
     .header {
@@ -22,7 +36,7 @@ body {
         .nav {
           ul {
             display: flex;
-            font-size: 16px;
+            font-size: 14px;
             li {
               margin: 0 15px;
               line-height: 50px;
