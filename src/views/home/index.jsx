@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from 'react'
 import { observer, MobXProviderContext } from 'mobx-react'
 import { Input } from 'antd'
+import debounce from 'lodash/debounce'
 import './index.less'
 
 const { TextArea } = Input
@@ -10,13 +11,11 @@ const Home = () => {
   const [targetCode, setTargetCode] = useState('')
   const textAreaElem = useRef(null)
 
-  const textareaChange = (event) => {
+  const textareaChange = debounce((event) => {
     if(!event.target.value) {
       setTargetCode('')
+      return
     }
-  }
-
-  const textareaHandle = (event) => {
     wasm.then(() => {
       build.transform(`${event.target.value}`, {
         loader: 'js',
@@ -28,6 +27,10 @@ const Home = () => {
         setTargetCode(JSON.stringify(e.errors[0]?.text))
       })
     })
+  }, 500)
+
+  const textareaHandle = (event) => {
+    
   }
 
   useEffect(() => {
@@ -50,7 +53,6 @@ const Home = () => {
                   ref={textAreaElem}
                   bordered={false}
                   autoSize={{ minRows: 8 }}
-                  onPressEnter={textareaHandle}
                   onChange={textareaChange}
                 >  
                 </TextArea>

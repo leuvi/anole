@@ -2,10 +2,10 @@ const path = require('path')
 const fs = require('fs')
 const less = require('less')
 
-//匹配@import css规则
+//匹配@import导入css的路径
 const importRegexp = /@import(?:\s+\((.*)\))?\s+['"](.*)['"]/
 const globalImportRegexp = /@import(?:\s+\((.*)\))?\s+['"](.*)['"]/g
-//注释
+//注释内容
 const importCommentRegexp = /(?:\/\*(?:[\s\S]*?)\*\/)|(\/\/(?:.*)$)/gm
 
 //获取@import方式导入的less文件路径
