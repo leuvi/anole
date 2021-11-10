@@ -4,6 +4,7 @@ const fs = require('fs')
 const pkg = require('../package.json')
 const chalk = require('chalk')
 const sh = require('shelljs')
+const glob = require('glob')
 const lessPlugin = require('../plugins/less')
 
 const start = Date.now()
@@ -36,7 +37,7 @@ const run = async () => {
     entryPoints: {
       main: 'src/index.jsx'
     },
-    entryNames: 'js/[name]',
+    entryNames: 'js/[name]', //js和css暂时只能放在一个目录 https://github.com/evanw/esbuild/issues/1713
     chunkNames: 'chunks/[name]-[hash]',
     outdir: directory,
     outExtension: {
@@ -69,8 +70,12 @@ const run = async () => {
       })],
     pure: ['console.log']
   })
-
+  
   console.log(await esbuild.analyzeMetafile(result.metafile, { verbose: false }))
+
+  glob('dist/js/*.js', file => {
+    console.log(file)
+  })
 
   console.log(`构建总耗时：${chalk.green((Date.now() - start) / 1000)} 秒`)
 }
