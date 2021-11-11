@@ -18,9 +18,6 @@ if(sh.test('-e', directory)) {
 sh.mkdir(directory)
 sh.cp('public/index.html', directory)
 sh.cp('node_modules/esbuild-wasm/esbuild.wasm', `${directory}/compile.wasm`)
-sh.sed('-i', /app\.css/, './js/main.css', `${directory}/index.html`)
-sh.sed('-i', /app\.js/, './js/main.mjs', `${directory}/index.html`)
-
 
 let envPlugin = {
   name: 'auto-node-env',
@@ -37,8 +34,8 @@ const run = async () => {
     entryPoints: {
       main: 'src/index.jsx'
     },
-    entryNames: 'js/[name]', //js和css暂时只能放在一个目录 https://github.com/evanw/esbuild/issues/1713
-    chunkNames: 'chunks/[name]-[hash]',
+    entryNames: 'js/[name]-[hash]', //js和css暂时只能放在一个目录 https://github.com/evanw/esbuild/issues/1713
+    //chunkNames: 'chunks/[name]-[hash]',
     outdir: directory,
     outExtension: {
       '.js': '.mjs'
@@ -73,8 +70,20 @@ const run = async () => {
   
   console.log(await esbuild.analyzeMetafile(result.metafile, { verbose: false }))
 
-  glob('dist/js/*.js', file => {
-    console.log(file)
+  glob('dist/js/*.?(m)js', (err, file) => {
+    if(file.length) {
+      file.forEach(js => {
+        sh.sed('-i', /app\.js/, js.replace(directory, '\.'), `${directory}/index.html`)
+      })
+    }
+  })
+
+  glob('dist/js/*.css', (err, file) => {
+    if(file.length) {
+      file.forEach(css => {
+        sh.sed('-i', /app\.css/, css.replace(directory, '\.'), `${directory}/index.html`)
+      })
+    }
   })
 
   console.log(`构建总耗时：${chalk.green((Date.now() - start) / 1000)} 秒`)

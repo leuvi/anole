@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext, useRef } from 'react'
 import { observer, MobXProviderContext } from 'mobx-react'
 import { Input } from 'antd'
 import debounce from 'lodash/debounce'
+import clsx from 'clsx'
+import waveEffect from './module/wave'
 import './index.less'
 
 const { TextArea } = Input
@@ -9,11 +11,13 @@ const { TextArea } = Input
 const Home = () => {
   const { wasm, build } = useContext(MobXProviderContext)
   const [targetCode, setTargetCode] = useState('')
+  const [catchError, setCatchError] = useState(false)
   const textAreaElem = useRef(null)
 
   const textareaChange = debounce((event) => {
     if(!event.target.value) {
       setTargetCode('')
+      setCatchError(false)
       return
     }
     wasm.then(() => {
@@ -23,8 +27,10 @@ const Home = () => {
         target: 'chrome58'
       }).then(res => {
         setTargetCode(res.code)
+        setCatchError(false)
       }).catch(e => {
         setTargetCode(JSON.stringify(e.errors[0]?.text))
+        setCatchError(true)
       })
     })
   }, 500)
@@ -35,6 +41,7 @@ const Home = () => {
 
   useEffect(() => {
     textAreaElem.current.focus()
+    waveEffect('.wave')
   }, [])
   
   return (
@@ -62,11 +69,16 @@ const Home = () => {
               <div className="hd">
                 <h4>输出</h4>
               </div>
-              <div className="bd">
+              <div className={clsx('bd', catchError ? 'error' : '')}>
                 {targetCode}
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="section">
+        <div className="wave">
+          <canvas className="flip"></canvas>
         </div>
       </div>
     </div>

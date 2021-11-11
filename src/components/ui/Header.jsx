@@ -12,6 +12,9 @@ const Header = () => {
               <NavLink exact to="/">首页</NavLink>
             </li>
             <li>
+              <NavLink to="/compile">试一试</NavLink>
+            </li>
+            <li>
               <NavLink to="/about">关于</NavLink>
             </li>
           </ul>

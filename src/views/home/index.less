@@ -57,6 +57,9 @@
           textarea.ant-input {
             color: #eee;
           }
+          &.error {
+            background: #702141;
+          }
         }
       }
       .output {
@@ -66,4 +69,68 @@
       }
     }
   }
+  .section {
+    height: 500px;
+    .wave {
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    .wave canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      -webkit-transform: rotate(180deg);
+      transform: rotate(180deg);
+      z-index: 1;
+    }
+    
+    .wave canvas:nth-of-type(2) {
+        z-index: 2
+    }
+    
+    .wave canvas.flip {
+        top: initial;
+        bottom: 0;
+        right: 0;
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+  }
+}
+
+@keyframes flip {
+  0% {
+      transform: perspective(400px) rotateY(0);
+      animation-timing-function: ease-out
+  }
+
+  40% {
+      transform: perspective(400px) translateZ(150px) rotateY(170deg);
+      animation-timing-function: ease-out
+  }
+
+  50% {
+      transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
+      animation-timing-function: ease-in
+  }
+
+  80% {
+      transform: perspective(400px) rotateY(360deg) scale(.95);
+      animation-timing-function: ease-in
+  }
+
+  100% {
+      transform: perspective(400px) scale(1);
+      animation-timing-function: ease-in
+  }
+}
+
+.flip {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+  -webkit-animation-name: flip;
+  animation-name: flip
 }
