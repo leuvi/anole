@@ -88,6 +88,6 @@ esbuild.serve({
   `)
 
   if (process.platform === 'win32') {
-    //exec(`cmd /c start http://localhost:${port}`)
+    exec(`cmd /c start http://localhost:${port}`)
   }
 })
