@@ -15,6 +15,9 @@ const Header = () => {
               <NavLink to="/compile">试一试</NavLink>
             </li>
             <li>
+              <NavLink to="/d3">D3</NavLink>
+            </li>
+            <li>
               <NavLink to="/about">关于</NavLink>
             </li>
           </ul>

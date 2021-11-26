@@ -3,14 +3,31 @@
   height: 800px;
   margin: 0 auto;
   display: flex;
+  .hd {
+    height: 40px;
+    border-bottom: 1px solid #c1dcf5;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
   .aside {
-    flex-basis: 300px;
-    background-color: #c1dcf5;
+    flex-basis: 200px;
+    border-left: 1px solid #c1dcf5;
+    border-right: 1px solid #c1dcf5;
   }
   .inputbox {
-    flex-basis: 450px;
+    flex-basis: 500px;
+    border-right: 1px solid #c1dcf5;
   }
   .outputbox {
-    flex-basis: 450px;
+    flex-basis: 500px;
+    border-right: 1px solid #c1dcf5;
+    .bd {
+      padding: 10px;
+      &.error {
+        background: red;
+        color: #fff;
+      }
+    }
   }
 }

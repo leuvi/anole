@@ -1,6 +1,7 @@
 import Home from '../views/home'
 import Compile from '../views/compile'
 import About from '../views/about'
+import D3 from '../views/d3'
 import ErrorComponent from '../views/404'
 
 const routers = [
@@ -21,6 +22,12 @@ const routers = [
     key: 'about',
     path: '/about',
     component: About
+  },
+  {
+    title: 'D3',
+    key: 'd3',
+    path: '/d3',
+    component: D3
   },
   {
     title: '404',
